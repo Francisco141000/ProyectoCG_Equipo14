@@ -1,0 +1,56 @@
+# 3ds Max Wavefront OBJ Exporter v0.99 - (c)2007 guruware
+# File Created: 11.03.2026 13:56:05
+
+newmtl phongE3SG
+	Kd 0.0000 0.0000 0.0000
+	Ks 0.9000 0.9000 0.9000
+	Tr 0.0000
+	d 1.0000
+	Tf 1.0000 1.0000 1.0000
+	Pr 0.0000
+	Pm 0.0000
+	Pc 0.0000
+	Pcr 0.0000
+	Ni 1.5000
+	Ke 0.0000 0.0000 0.0000
+	illum 2
+	map_Kd woodsground_diffuse.jpg
+	map_Ks woodsground_specular.jpg
+	bump woodsground_normal.jpg
+	map_bump woodsground_normal.jpg
+
+newmtl phongE1SG
+	Kd 0.0000 0.0000 0.0000
+	Ks 0.9000 0.9000 0.9000
+	Tr 0.0000
+	d 1.0000
+	Tf 1.0000 1.0000 1.0000
+	Pr 0.0000
+	Pm 0.0000
+	Pc 0.0000
+	Pcr 0.0000
+	Ni 1.5000
+	Ke 0.0000 0.0000 0.0000
+	illum 2
+	map_Kd rocks_diffuse.jpg
+	map_Ks rocks_specular.jpg
+	bump rocks_normal.jpg
+	map_bump rocks_normal.jpg
+
+newmtl phongE4SG
+	Kd 0.0000 0.0000 0.0000
+	Ks 0.9000 0.9000 0.9000
+	Tr 0.0000
+	d 1.0000
+	Tf 1.0000 1.0000 1.0000
+	Pr 0.0000
+	Pm 0.0000
+	Pc 0.0000
+	Pcr 0.0000
+	Ni 1.5000
+	Ke 0.0000 0.0000 0.0000
+	illum 2
+	map_Kd utensilrope_diffuse.jpg
+	map_Ks utensilrope_specular.jpg
+	bump utensilrope_normal.jpg
+	map_bump utensilrope_normal.jpg
