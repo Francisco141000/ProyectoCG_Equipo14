@@ -125,7 +125,8 @@ int main()
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);*/
 
 	// Create a GLFWwindow object that we can use for GLFW's functions
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Garcia Hernandez Jesus Francisco - Previo 9. Fuentes de luz", nullptr, nullptr);
+	glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Equipo 14 - Proyecto final", nullptr, nullptr);
 
 	if (nullptr == window)
 	{
@@ -163,7 +164,8 @@ int main()
 
 	//Load Model
 	Model Dog((char*)"Models/RedDog/RedDog.obj");
-	Model Piso((char*)"Models/Piso/piso.obj");
+	//Model Piso((char*)"Models/Piso/piso.obj");
+	Model Piso((char*)"Models/PisoPuente/PisoPuente.obj");
 
 	// First, set the container's VAO (and VBO)
 	GLuint VBO, VAO;
@@ -220,10 +222,10 @@ int main()
 		// Directional light
 
 		// Caso 1 (Claro)
-		/*glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.45f, 0.3f, 0.1f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 1.0f, 0.8f, 0.4f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 1.0f, 0.9f, 0.6f);*/
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 1.0f, 0.9f, 0.6f);
 
 		// Caso 2 (Oscuro)
 		/*glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
@@ -232,10 +234,10 @@ int main()
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 0.3f, 0.3f, 0.15f);*/
 
 		// Desactivada
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
+		/*glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.0f, 0.0f, 0.0f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.0f, 0.0f, 0.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 0.0f, 0.0f, 0.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 0.0f, 0.0f, 0.0f);*/
 
 
 		// Point light
@@ -338,7 +340,13 @@ int main()
         view = camera.GetViewMatrix();	
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//model = glm::translate(model, glm::vec3(6.65f, 5.0f, 7.29f));
 		Piso.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Dog.Draw(lightingShader);
 
 		// Transparencia activada
 		//model = glm::mat4(1);
@@ -350,15 +358,15 @@ int main()
 		//glDisable(GL_BLEND);  //Desactiva el canal alfa 
 		//glBindVertexArray(0);
 
-		// Transparencia desactivada
-		model = glm::mat4(1);
-		//glEnable(GL_BLEND); //Avtiva la funcionalidad para trabajar el canal alfa
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 0);
-		Dog.Draw(lightingShader);
-		//glDisable(GL_BLEND);  //Desactiva el canal alfa 
-		glBindVertexArray(0);
+		//// Transparencia desactivada
+		//model = glm::mat4(1);
+		////glEnable(GL_BLEND); //Avtiva la funcionalidad para trabajar el canal alfa
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 0);
+		//Dog.Draw(lightingShader);
+		////glDisable(GL_BLEND);  //Desactiva el canal alfa 
+		//glBindVertexArray(0);
 	
 		// Also draw the lamp object, again binding the appropriate shader
 		lampShader.Use();
