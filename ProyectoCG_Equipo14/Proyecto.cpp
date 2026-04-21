@@ -164,8 +164,7 @@ int main()
 
 	//Load Model
 	Model Dog((char*)"Models/RedDog/RedDog.obj");
-	//Model Piso((char*)"Models/Piso/piso.obj");
-	Model Piso((char*)"Models/PisoPuente/PisoPuente.obj");
+	Model Piso((char*)"Models/Piso/Piso.obj");
 
 	// First, set the container's VAO (and VBO)
 	GLuint VBO, VAO;
