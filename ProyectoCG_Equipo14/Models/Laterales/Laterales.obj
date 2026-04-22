@@ -1,0 +1,59 @@
+# 3ds Max Wavefront OBJ Exporter v0.99 - (c)2007 guruware
+# File Created: 21.04.2026 21:45:56
+
+mtllib Laterales.mtl
+
+#
+# object Plane002
+#
+
+v  -4.6000 1.0000 -27.5000
+v  -4.6000 1.0000 27.5000
+v  -4.6000 0.0000 -27.5000
+v  -4.6000 0.0000 27.5000
+# 4 vertices
+
+vn 1.0000 0.0000 -0.0000
+# 1 vertex normals
+
+vt 0.0000 18.0000 0.5000
+vt 0.0000 0.0000 0.5000
+vt 1.0000 18.0000 0.5000
+vt 1.0000 0.0000 0.5000
+# 4 texture coords
+
+o Plane002
+g Plane002
+usemtl Material__35
+s 1
+f 1/1/1 2/2/1 3/3/1 
+f 4/4/1 3/3/1 2/2/1 
+# 0 polygons - 2 triangles
+
+#
+# object Plane003
+#
+
+v  4.5999 1.0000 -27.5000
+v  4.5999 1.0000 27.5000
+v  4.5999 0.0000 -27.5000
+v  4.5999 0.0000 27.5000
+# 4 vertices
+
+vn 1.0000 0.0000 -0.0000
+# 1 vertex normals
+
+vt 0.0000 18.0000 0.5000
+vt 0.0000 0.0000 0.5000
+vt 1.0000 18.0000 0.5000
+vt 1.0000 0.0000 0.5000
+# 4 texture coords
+
+o Plane003
+g Plane003
+usemtl Material__35
+s 1
+f 5/5/2 6/6/2 7/7/2 
+f 8/8/2 7/7/2 6/6/2 
+# 0 polygons - 2 triangles
+
