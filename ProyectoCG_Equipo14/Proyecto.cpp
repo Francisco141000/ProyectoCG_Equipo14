@@ -165,6 +165,10 @@ int main()
 	//Load Model
 	Model Dog((char*)"Models/RedDog/RedDog.obj");
 	Model Piso((char*)"Models/Piso/Piso.obj");
+	Model Columnas((char*)"Models/Columnas/Columnas.obj");
+	Model Techo((char*)"Models/Techo/Techo.obj");
+	Model Laterales((char*)"Models/Laterales/Laterales.obj");
+
 
 	// First, set the container's VAO (and VBO)
 	GLuint VBO, VAO;
@@ -221,7 +225,8 @@ int main()
 		// Directional light
 
 		// Caso 1 (Claro)
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), 0.0f, -100.0f, -100.0f);
+		//glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.2f, 0.2f, 0.2f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.8f, 0.8f, 0.8f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 1.0f, 1.0f, 1.0f);
@@ -337,7 +342,7 @@ int main()
 		
 		//Carga de modelo 
         view = camera.GetViewMatrix();	
-		model = glm::mat4(1);
+		model = glm::mat4(1.0f);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		//model = glm::translate(model, glm::vec3(6.65f, 5.0f, 7.29f));
 		Piso.Draw(lightingShader);
@@ -346,6 +351,21 @@ int main()
 		model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Dog.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 0.001f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Columnas.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 0.002f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Techo.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		//model = glm::translate(model, glm::vec3(0.0f, 0.002f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Laterales.Draw(lightingShader);
 
 		// Transparencia activada
 		//model = glm::mat4(1);
