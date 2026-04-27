@@ -1,5 +1,5 @@
 # 3ds Max Wavefront OBJ Exporter v0.99 - (c)2007 guruware
-# File Created: 21.04.2026 14:14:25
+# File Created: 26.04.2026 13:31:24
 
 newmtl Material__2
 	Ns 10.0000
@@ -14,6 +14,8 @@ newmtl Material__2
 	Ke 0.0000 0.0000 0.0000
 	map_Ka Map__26_Color Correction.jpg
 	map_Kd Map__26_Color Correction.jpg
+	map_bump TCom_Paint_Chipped_512_normal.tif
+	bump TCom_Paint_Chipped_512_normal.tif
 
 newmtl Material__3
 	Ns 10.0000
@@ -28,3 +30,5 @@ newmtl Material__3
 	Ke 0.0000 0.0000 0.0000
 	map_Ka Map__36_Color Correction.jpg
 	map_Kd Map__36_Color Correction.jpg
+	map_bump Poliigon_StoneQuartzite_8060_Normal.png
+	bump Poliigon_StoneQuartzite_8060_Normal.png

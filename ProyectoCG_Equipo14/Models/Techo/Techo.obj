@@ -1,10 +1,10 @@
 # 3ds Max Wavefront OBJ Exporter v0.99 - (c)2007 guruware
-# File Created: 21.04.2026 20:42:43
+# File Created: 26.04.2026 13:34:23
 
 mtllib Techo.mtl
 
 #
-# object Plane002
+# object Techo
 #
 
 v  -4.5000 6.0000 -27.5000
@@ -22,8 +22,8 @@ vt 3.0000 18.0000 0.5000
 vt 3.0000 0.0000 0.5000
 # 4 texture coords
 
-o Plane002
-g Plane002
+o Techo
+g Techo
 usemtl Material__35
 s 1
 f 1/1/1 2/2/1 3/3/1 
