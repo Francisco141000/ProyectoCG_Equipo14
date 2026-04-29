@@ -155,14 +155,28 @@ int main()
 	Shader lightingShader("Shader/lighting.vs", "Shader/lighting.frag");
 	Shader lampShader("Shader/lamp.vs", "Shader/lamp.frag");
 
-	//Load Model
+	// Carga Modelo Puente
 	Model Dog((char*)"Models/RedDog/RedDog.obj");
 	Model Piso((char*)"Models/Piso/Piso.obj");
 	Model Columnas((char*)"Models/Columnas/Columnas.obj");
 	Model Techo((char*)"Models/Techo/Techo.obj");
 	Model Laterales((char*)"Models/Laterales/Laterales.obj");
-	Model Stand_1((char*)"Models/Stand_1/Stand_1.obj");
 
+	// Carga Modelo Stand 1
+	Model Banco_Stand1((char*)"Models/Stand_1/Banco_Stand1.obj");
+	Model Escritorio_Stand1((char*)"Models/Stand_1/Escritorio_Stand1.obj");
+	Model Logo_Stand1((char*)"Models/Stand_1/Logo_Stand1.obj");
+	Model Mesa_Stand1((char*)"Models/Stand_1/Mesa_Stand1.obj");
+	Model Paredes_Stand1((char*)"Models/Stand_1/Paredes_Stand1.obj");
+	Model Piso_Stand1((char*)"Models/Stand_1/Piso_Stand1.obj");
+	Model Silla_Stand1((char*)"Models/Stand_1/Silla_Stand1.obj");
+	
+	// Carga Modelo Stand 2
+	Model Caja_Stand2((char*)"Models/Stand_2/Caja_Stand2.obj");
+	Model Escritorio_Stand2((char*)"Models/Stand_2/Escritorio_Stand2.obj");
+	Model Logo_Stand2((char*)"Models/Stand_2/Logo_Stand2.obj");
+	Model Mesa_Stand2((char*)"Models/Stand_2/Mesa_Stand2.obj");
+	Model Plataforma_Stand2((char*)"Models/Stand_2/Plataforma_Stand2.obj");
 
 	// First, set the container's VAO (and VBO)
 	GLuint VBO, VAO;
@@ -315,12 +329,17 @@ int main()
 		glm::mat4 model(1);
 		
 		//Carga de modelo 
-        view = camera.GetViewMatrix();	
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//model = glm::translate(model, glm::vec3(6.65f, 5.0f, 7.29f));
-		Piso.Draw(lightingShader);
+        view = camera.GetViewMatrix();
 
+
+		// Despliegue Modelo Puente - Sin transparencia
+
+		model = glm::mat4(1);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 0);
+		Piso.Draw(lightingShader);
+		
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -337,35 +356,66 @@ int main()
 		Techo.Draw(lightingShader);
 
 		model = glm::mat4(1.0f);
-		//model = glm::translate(model, glm::vec3(0.0f, 0.002f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Laterales.Draw(lightingShader);
 
+
+		// Despliegue Modelo Stand 1
+
 		model = glm::mat4(1.0f);
-		//model = glm::translate(model, glm::vec3(0.0f, 0.002f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Stand_1.Draw(lightingShader);
+		Banco_Stand1.Draw(lightingShader);
+		
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Escritorio_Stand1.Draw(lightingShader);
 
-		// Transparencia activada
-		//model = glm::mat4(1);
-		//glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
-		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 1);
-		//Muro.Draw(lightingShader);
-		//glDisable(GL_BLEND);  //Desactiva el canal alfa 
-		//glBindVertexArray(0);
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Logo_Stand1.Draw(lightingShader);
 
-		//// Transparencia desactivada
-		//model = glm::mat4(1);
-		////glEnable(GL_BLEND); //Avtiva la funcionalidad para trabajar el canal alfa
-		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 0);
-		//Dog.Draw(lightingShader);
-		////glDisable(GL_BLEND);  //Desactiva el canal alfa 
-		//glBindVertexArray(0);
-	
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Mesa_Stand1.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Paredes_Stand1.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Piso_Stand1.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Silla_Stand1.Draw(lightingShader);
+
+
+		// Despliegue Modelo Stand 2
+
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Caja_Stand2.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Escritorio_Stand2.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Logo_Stand2.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Mesa_Stand2.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Plataforma_Stand2.Draw(lightingShader);
+
+		glBindVertexArray(0);
+
+
 		// Also draw the lamp object, again binding the appropriate shader
 		lampShader.Use();
 
