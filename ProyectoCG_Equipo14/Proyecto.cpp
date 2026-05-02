@@ -1,7 +1,7 @@
 // Proyecto final
 // 316118732
 // 421025550
-// Fecha de entrega: XX de XX de 2026
+// Fecha de entrega: 02 de mayo de 2026
 
 #include <iostream>
 #include <cmath>
