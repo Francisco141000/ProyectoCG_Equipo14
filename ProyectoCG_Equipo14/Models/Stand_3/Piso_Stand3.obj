@@ -1,0 +1,31 @@
+# 3ds Max Wavefront OBJ Exporter v0.99 - (c)2007 guruware
+# File Created: 03.05.2026 22:34:17
+
+mtllib Piso_Stand3.mtl
+
+#
+# object Piso_Stand3
+#
+
+v  -0.5808 0.0418 -12.4294
+v  -4.1978 0.0418 -12.4294
+v  -4.1978 0.0418 -8.8124
+v  -0.5808 0.0418 -8.8124
+# 4 vertices
+
+vn 0.0000 1.0000 0.0000
+# 1 vertex normals
+
+vt 1.0000 0.0000 0.0000
+vt 1.0000 1.0000 0.0000
+vt 0.0000 1.0000 0.0000
+vt 0.0000 0.0000 0.0000
+# 4 texture coords
+
+o Piso_Stand3
+g Piso_Stand3
+usemtl Material__77
+s off
+f 1/1/1 2/2/1 3/3/1 4/4/1 
+# 1 polygons
+
