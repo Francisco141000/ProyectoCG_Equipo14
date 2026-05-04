@@ -105,6 +105,7 @@ float vertices[] = {
 };
 
 glm::vec3 Light1 = glm::vec3(0);
+bool switchStands = false;
 
 //Anim
 float rotBall = 0.0f;
@@ -119,10 +120,10 @@ float vuelta = 0.0f;
 
 //KeyFrames
 float dogPosX, dogPosY, dogPosZ;
-
 #define MAX_FRAMES 100
 int i_max_steps = 190;
 int i_curr_steps = 0;
+
 typedef struct _frame {
 
 	float rotDog;
@@ -297,6 +298,21 @@ int main()
 	Model Logo_Stand2((char*)"Models/Stand_2/Logo_Stand2.obj");
 	Model Mesa_Stand2((char*)"Models/Stand_2/Mesa_Stand2.obj");
 	Model Plataforma_Stand2((char*)"Models/Stand_2/Plataforma_Stand2.obj");
+
+	// Carga Modelo Stand 3
+	Model Mesa_Stand3((char*)"Models/Stand_3/Mesa_Stand3.obj");
+	Model Paredes_Stand3((char*)"Models/Stand_3/Paredes_Stand3.obj");
+	Model Piso_Stand3((char*)"Models/Stand_3/Piso_Stand3.obj");
+
+	// Carga Modelo Stand 4
+	Model Caja_Stand4((char*)"Models/Stand_4/Caja_Stand4.obj");
+	Model Logos_Stand4((char*)"Models/Stand_4/Logos_Stand4.obj");
+	Model Paredes_Stand4((char*)"Models/Stand_4/Paredes_Stand4.obj");
+	Model Piso_Stand4((char*)"Models/Stand_4/Piso_Stand4.obj");
+	Model Repisas_Stand4((char*)"Models/Stand_4/Repisas_Stand4.obj");
+
+	// Carga Modelo Básico
+	Model Stand_Basico((char*)"Models/Stand_Basico/Stand_Basico.obj");
 
 	//KeyFrames
 	for (int i = 0; i < MAX_FRAMES; i++)
@@ -573,7 +589,7 @@ int main()
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.outerCutOff"), glm::cos(glm::radians(0.0f)));
 
 		// Set material properties
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 4.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 1.0f);
 
 		// Create camera transformations
 		glm::mat4 view;
@@ -602,11 +618,24 @@ int main()
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 0);
 		Piso.Draw(lightingShader);
 
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 0.001f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Columnas.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 0.002f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Techo.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Laterales.Draw(lightingShader);
 
 
-		model = glm::mat4(1);
 		//Body
-		modelTemp = model = glm::translate(model, glm::vec3(dogPosX, dogPosY, dogPosZ));
+		model = glm::mat4(1);
+		modelTemp = model = glm::translate(model, glm::vec3(dogPosX, dogPosY + 0.4f, dogPosZ));
 		modelTemp = model = glm::rotate(model, glm::radians(rotDog), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelTemp = model = glm::rotate(model, glm::radians(vuelta), glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -655,80 +684,149 @@ int main()
 		B_RightLeg.Draw(lightingShader);
 
 
+		if (switchStands)
+		{
 
-		
-		/*model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.5f, 0.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Dog.Draw(lightingShader);*/
+			// Despliegue Modelo Stand 1
 
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.001f, 0.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Columnas.Draw(lightingShader);
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Banco_Stand1.Draw(lightingShader);
 
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.002f, 0.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Techo.Draw(lightingShader);
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Escritorio_Stand1.Draw(lightingShader);
 
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Laterales.Draw(lightingShader);
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Logo_Stand1.Draw(lightingShader);
 
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Mesa_Stand1.Draw(lightingShader);
 
-		// Despliegue Modelo Stand 1
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Paredes_Stand1.Draw(lightingShader);
 
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Banco_Stand1.Draw(lightingShader);
-		
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Escritorio_Stand1.Draw(lightingShader);
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Piso_Stand1.Draw(lightingShader);
 
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Logo_Stand1.Draw(lightingShader);
-
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Mesa_Stand1.Draw(lightingShader);
-
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Paredes_Stand1.Draw(lightingShader);
-
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Piso_Stand1.Draw(lightingShader);
-
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Silla_Stand1.Draw(lightingShader);
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Silla_Stand1.Draw(lightingShader);
 
 
-		// Despliegue Modelo Stand 2
+			// Despliegue Modelo Stand 2
 
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Caja_Stand2.Draw(lightingShader);
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Caja_Stand2.Draw(lightingShader);
 
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Escritorio_Stand2.Draw(lightingShader);
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Escritorio_Stand2.Draw(lightingShader);
 
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Logo_Stand2.Draw(lightingShader);
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Logo_Stand2.Draw(lightingShader);
 
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Mesa_Stand2.Draw(lightingShader);
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Mesa_Stand2.Draw(lightingShader);
 
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Plataforma_Stand2.Draw(lightingShader);
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Plataforma_Stand2.Draw(lightingShader);
+
+
+			// Despliegue Modelo Stand 3
+
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Mesa_Stand3.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Paredes_Stand3.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Piso_Stand3.Draw(lightingShader);
+
+			// Despliegue Modelo Stand 4
+
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Caja_Stand4.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Logos_Stand4.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Paredes_Stand4.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Piso_Stand4.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Repisas_Stand4.Draw(lightingShader);
+
+		}
+
+		if (!switchStands)
+		{
+
+			// Depsliegue Modelos Stand Básico
+			model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Stand_Basico.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -41.4f));
+			model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Stand_Basico.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 13.8f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Stand_Basico.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -27.6f));
+			model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Stand_Basico.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 27.6f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Stand_Basico.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -13.8f));
+			model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Stand_Basico.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 41.4f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Stand_Basico.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+			model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Stand_Basico.Draw(lightingShader);
+
+		}
 
 		glBindVertexArray(0);
 
@@ -939,6 +1037,12 @@ void DoMovement()
 // Is called whenever a key is pressed/released via GLFW
 void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode)
 {
+
+	if (keys[GLFW_KEY_Z])
+	{
+		switchStands = !switchStands;
+	}
+
 	if (keys[GLFW_KEY_L])
 	{
 		if (play == false && (FrameIndex > 1))
