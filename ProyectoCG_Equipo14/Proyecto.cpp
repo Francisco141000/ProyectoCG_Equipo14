@@ -277,11 +277,11 @@ int main()
 	Model B_LeftLeg((char*)"Models/RedDogSeparated/B_LeftLegDog.obj");
 
 	// Carga Modelo Puente
-	//Model Dog((char*)"Models/RedDog/RedDog.obj");
 	Model Piso((char*)"Models/Piso/Piso.obj");
 	Model Columnas((char*)"Models/Columnas/Columnas.obj");
 	Model Techo((char*)"Models/Techo/Techo.obj");
 	Model Laterales((char*)"Models/Laterales/Laterales.obj");
+	Model Entorno((char*)"Models/Entorno/Entorno.obj");
 
 	// Carga Modelo Stand 1
 	Model Banco_Stand1((char*)"Models/Stand_1/Banco_Stand1.obj");
@@ -631,6 +631,10 @@ int main()
 		model = glm::mat4(1.0f);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Laterales.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Entorno.Draw(lightingShader);
 
 
 		//Body
