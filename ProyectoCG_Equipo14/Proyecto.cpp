@@ -105,7 +105,6 @@ float vertices[] = {
 };
 
 glm::vec3 Light1 = glm::vec3(0);
-bool switchStands = false;
 
 //Anim
 float rotBall = 0.0f;
@@ -118,6 +117,17 @@ float head = 0.0f;
 float tail = 0.0f;
 float vuelta = 0.0f;
 
+// Animacion Stands Básicos
+int anim_Stands = 0;
+float traslacion_StandBasico = -5.0f;
+float rotacion_StandBasico = 0.0f;
+float escala_StandBasico = 0.01f;
+
+// Animación Stands Opcionales
+float traslacion_StandOpcional = -10.0f;
+float rotacon_StandOpcional = 0.0f;
+float escala_StandOpcional = 0.01f;
+
 //KeyFrames
 float dogPosX, dogPosY, dogPosZ;
 #define MAX_FRAMES 100
@@ -125,7 +135,6 @@ int i_max_steps = 190;
 int i_curr_steps = 0;
 
 typedef struct _frame {
-
 	float rotDog;
 	float rotDogInc;
 	float dogPosX;
@@ -687,14 +696,114 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		B_RightLeg.Draw(lightingShader);
 
+		if (anim_Stands == 1)
+		{
 
-		if (switchStands)
+			// Depsliegue Modelos Stand Básico
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, traslacion_StandBasico, 0.0f));
+			model = glm::rotate(model, glm::radians(rotacion_StandBasico), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(escala_StandBasico));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Stand_Basico.Draw(lightingShader);
+			
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, traslacion_StandBasico, -41.4f));
+			model = glm::rotate(model, glm::radians(rotacion_StandBasico + 180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(escala_StandBasico));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Stand_Basico.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, traslacion_StandBasico, 13.8f));
+			model = glm::rotate(model, glm::radians(rotacion_StandBasico), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(escala_StandBasico));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Stand_Basico.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, traslacion_StandBasico, -27.6f));
+			model = glm::rotate(model, glm::radians(rotacion_StandBasico + 180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(escala_StandBasico));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Stand_Basico.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, traslacion_StandBasico, 27.6f));
+			model = glm::rotate(model, glm::radians(rotacion_StandBasico), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(escala_StandBasico));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Stand_Basico.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, traslacion_StandBasico, -13.8f));
+			model = glm::rotate(model, glm::radians(rotacion_StandBasico + 180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(escala_StandBasico));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Stand_Basico.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, traslacion_StandBasico, 41.4f));
+			model = glm::rotate(model, glm::radians(rotacion_StandBasico), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(escala_StandBasico));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Stand_Basico.Draw(lightingShader);
+
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, traslacion_StandBasico, 0.0f));
+			model = glm::rotate(model, glm::radians(rotacion_StandBasico + 180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(escala_StandBasico));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Stand_Basico.Draw(lightingShader);
+
+		}
+
+		if (anim_Stands == 2)
 		{
 
 			// Despliegue Modelo Stand 1
 
+			// --- PISO: El primero en llegar (sin suma en Y) ---
 			model = glm::mat4(1.0f);
+			model = glm::translate(model, glm::vec3(0.0f, traslacion_StandOpcional, 0.0f));
+			model = glm::rotate(model, glm::radians(rotacon_StandOpcional), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(escala_StandOpcional));
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Piso_Stand1.Draw(lightingShader);
+			Paredes_Stand1.Draw(lightingShader);
+			Escritorio_Stand1.Draw(lightingShader);
+			Logo_Stand1.Draw(lightingShader);
+
+			//// --- PAREDES: Caen con un retraso (sumamos 2.0f a la variable negativa) ---
+			//model = glm::mat4(1.0f);
+			//model = glm::translate(model, glm::vec3(0.0f, traslacion_StandOpcional + 2.0f, 0.0f));
+			//model = glm::rotate(model, glm::radians(rotacon_StandOpcional + 90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			//model = glm::scale(model, glm::vec3(escala_StandOpcional));
+			//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			//Paredes_Stand1.Draw(lightingShader);
+
+			//// --- ESCRITORIO: Entra rotado 180 grados y cae desde más arriba ---
+			//model = glm::mat4(1.0f);
+			//model = glm::translate(model, glm::vec3(0.0f, traslacion_StandOpcional + 4.0f, 0.0f));
+			//model = glm::rotate(model, glm::radians(rotacon_StandOpcional + 180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			//model = glm::scale(model, glm::vec3(escala_StandOpcional));
+			//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			//Escritorio_Stand1.Draw(lightingShader);
+
+			//// --- LOGO: El último en ensamblarse (cae desde lo más alto) ---
+			//model = glm::mat4(1.0f);
+			//model = glm::translate(model, glm::vec3(0.0f, traslacion_StandOpcional + 6.0f, 0.0f));
+			//model = glm::rotate(model, glm::radians(rotacon_StandOpcional - 45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			//model = glm::scale(model, glm::vec3(escala_StandOpcional));
+			//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			//Logo_Stand1.Draw(lightingShader);
+
+			/*model = glm::mat4(1.0f);
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			model = glm::translate(model, glm::vec3(0.0f, traslacion_StandOpcional, 0.0f));
+			model = glm::rotate(model, glm::radians(rotacon_StandOpcional), glm::vec3(0.0f, 1.0f, 0.0f));
+			model = glm::scale(model, glm::vec3(escala_StandOpcional));
 			Banco_Stand1.Draw(lightingShader);
 
 			model = glm::mat4(1.0f);
@@ -719,7 +828,7 @@ int main()
 
 			model = glm::mat4(1.0f);
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-			Silla_Stand1.Draw(lightingShader);
+			Silla_Stand1.Draw(lightingShader);*/
 
 
 			// Despliegue Modelo Stand 2
@@ -780,55 +889,6 @@ int main()
 			model = glm::mat4(1.0f);
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 			Repisas_Stand4.Draw(lightingShader);
-
-		}
-
-		if (!switchStands)
-		{
-
-			// Depsliegue Modelos Stand Básico
-			model = glm::mat4(1.0f);
-			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-			Stand_Basico.Draw(lightingShader);
-
-			model = glm::mat4(1.0f);
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -41.4f));
-			model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-			Stand_Basico.Draw(lightingShader);
-
-			model = glm::mat4(1.0f);
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 13.8f));
-			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-			Stand_Basico.Draw(lightingShader);
-
-			model = glm::mat4(1.0f);
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -27.6f));
-			model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-			Stand_Basico.Draw(lightingShader);
-
-			model = glm::mat4(1.0f);
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 27.6f));
-			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-			Stand_Basico.Draw(lightingShader);
-
-			model = glm::mat4(1.0f);
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, -13.8f));
-			model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-			Stand_Basico.Draw(lightingShader);
-
-			model = glm::mat4(1.0f);
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 41.4f));
-			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-			Stand_Basico.Draw(lightingShader);
-
-			model = glm::mat4(1.0f);
-			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-			model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-			Stand_Basico.Draw(lightingShader);
 
 		}
 
@@ -1044,7 +1104,8 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 
 	if (keys[GLFW_KEY_Z])
 	{
-		switchStands = !switchStands;
+		anim_Stands += 1;
+		if (anim_Stands > 2) anim_Stands = 0;
 	}
 
 	if (keys[GLFW_KEY_L])
@@ -1139,6 +1200,35 @@ void Animation() {
 			vuelta += KeyFrame[playIndex].vueltaInc;
 			i_curr_steps++;
 		}
+	}
+
+	// Máquina de estados animación stand básico
+	if (anim_Stands == 1)
+	{
+		if (escala_StandBasico < 1.0f) escala_StandBasico += 0.005f;
+
+		if (rotacion_StandBasico < 360.0f) rotacion_StandBasico += 1.5f;
+
+		if (traslacion_StandBasico < 0.0f) traslacion_StandBasico += 0.025f;
+	}
+	else
+	{
+		traslacion_StandBasico = -5.0f;
+		rotacion_StandBasico = 0.0f;
+		escala_StandBasico = 0.01f;
+	}
+
+	if (anim_Stands == 2)
+	{
+		if (traslacion_StandOpcional < 0.0f) traslacion_StandOpcional += 0.05f; // Sube de -10 a 0
+		if (rotacon_StandOpcional < 360.0f) rotacon_StandOpcional += 1.5f;
+		if (escala_StandOpcional < 1.0f) escala_StandOpcional += 0.005f;
+	}
+	else
+	{
+		traslacion_StandOpcional = -10.0f;
+		rotacon_StandOpcional = 0.0f;
+		escala_StandOpcional = 0.01f;
 	}
 }
 
