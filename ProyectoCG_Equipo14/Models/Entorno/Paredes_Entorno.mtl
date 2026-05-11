@@ -1,23 +1,7 @@
 # 3ds Max Wavefront OBJ Exporter v0.99 - (c)2007 guruware
-# File Created: 06.05.2026 00:25:25
+# File Created: 07.05.2026 23:13:54
 
-newmtl Material__2
-	Ns 10.0000
-	Ni 1.5000
-	d 1.0000
-	Tr 0.0000
-	Tf 1.0000 1.0000 1.0000 
-	illum 2
-	Ka 0.8963 0.8963 0.8963
-	Kd 0.8963 0.8963 0.8963
-	Ks 0.1350 0.1350 0.1350
-	Ke 0.0000 0.0000 0.0000
-	map_Ka Map__26_Color Correction.jpg
-	map_Kd Map__26_Color Correction.jpg
-	map_bump TCom_Paint_Chipped_512_normal.tif
-	bump TCom_Paint_Chipped_512_normal.tif
-
-newmtl Material__3
+newmtl Material__66
 	Ns 10.0000
 	Ni 1.5000
 	d 1.0000
@@ -28,12 +12,12 @@ newmtl Material__3
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka Map__36_Color Correction.jpg
-	map_Kd Map__36_Color Correction.jpg
-	map_bump Poliigon_StoneQuartzite_8060_Normal.png
-	bump Poliigon_StoneQuartzite_8060_Normal.png
+	map_Ka Onyx004_1K-JPG_Color.jpg
+	map_Kd Onyx004_1K-JPG_Color.jpg
+	map_bump Onyx004_1K-JPG_NormalDX.jpg
+	bump Onyx004_1K-JPG_NormalDX.jpg
 
-newmtl Material__57
+newmtl Material__65
 	Ns 10.0000
 	Ni 1.5000
 	d 1.0000
@@ -44,10 +28,12 @@ newmtl Material__57
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka rough_plasterbrick_05_diff_1k.jpg
-	map_Kd rough_plasterbrick_05_diff_1k.jpg
+	map_Ka Map__53_Composite.jpg
+	map_Kd Map__53_Composite.jpg
+	map_bump Bricks057_1K-JPG_NormalDX.jpg
+	bump Bricks057_1K-JPG_NormalDX.jpg
 
-newmtl Material__36
+newmtl Material__67
 	Ns 10.0000
 	Ni 1.5000
 	d 1.0000
@@ -58,12 +44,12 @@ newmtl Material__36
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka diffuse_brick.jpg
-	map_Kd diffuse_brick.jpg
-	map_bump bump_brick.jpg
-	bump bump_brick.jpg
+	map_Ka Map__63_Composite.jpg
+	map_Kd Map__63_Composite.jpg
+	map_bump Planks026A_1K-JPG_NormalDX.jpg
+	bump Planks026A_1K-JPG_NormalDX.jpg
 
-newmtl Material__37
+newmtl Material__64
 	Ns 10.0000
 	Ni 1.5000
 	d 1.0000
@@ -74,12 +60,10 @@ newmtl Material__37
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka Ambient color_Metal.jpg
-	map_Kd Ambient color_Metal.jpg
-	map_bump Bump_Metal.jpg
-	bump Bump_Metal.jpg
+	map_Ka Plano1_ZonaCajas.png
+	map_Kd Plano1_ZonaCajas.png
 
-newmtl Material__35
+newmtl Material__63
 	Ns 10.0000
 	Ni 1.5000
 	d 1.0000
@@ -90,10 +74,8 @@ newmtl Material__35
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka Diffuse_lateral.jpg
-	map_Kd Diffuse_lateral.jpg
-	map_bump Bump_lateral.jpg
-	bump Bump_lateral.jpg
+	map_Ka Plano_ZonaCajas.png
+	map_Kd Plano_ZonaCajas.png
 
 newmtl Material__58
 	Ns 10.0000

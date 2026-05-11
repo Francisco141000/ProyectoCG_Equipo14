@@ -1,0 +1,34 @@
+# 3ds Max Wavefront OBJ Exporter v0.99 - (c)2007 guruware
+# File Created: 07.05.2026 23:14:41
+
+newmtl Material__58
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Map__42_Composite.jpg
+	map_Kd Map__42_Composite.jpg
+	map_bump Concrete031_1K-JPG_NormalDX.jpg
+	bump Concrete031_1K-JPG_NormalDX.jpg
+
+newmtl Material__68
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka PaintedMetal001_1K-JPG_Color.jpg
+	map_Kd PaintedMetal001_1K-JPG_Color.jpg
+	map_bump PaintedMetal001_1K-JPG_NormalDX.jpg
+	bump PaintedMetal001_1K-JPG_NormalDX.jpg
