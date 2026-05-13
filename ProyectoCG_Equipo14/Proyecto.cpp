@@ -415,6 +415,14 @@ int main()
 	Model LDI((char*)"Models/Camioneta/LDI.obj");
 	Model LDD((char*)"Models/Camioneta/LDD.obj");
 
+	// Carga Modelo Humano
+	Model Cuerpo((char*)"Models/Humano/Cuerpo.obj");
+	Model Brazo_Izquierdo((char*)"Models/Humano/Brazo_Izquierdo.obj");
+	Model Brazo_Derecho((char*)"Models/Humano/Brazo_Derecho.obj");
+	Model Pierna_Izquierda((char*)"Models/Humano/Pierna_Izquierda.obj");
+	Model Pierna_Derecha((char*)"Models/Humano/Pierna_Derecha.obj");
+
+
 	//KeyFrames
 	for (int i = 0; i < MAX_FRAMES; i++)
 	{
@@ -812,6 +820,28 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Columnas_Entorno.Draw(lightingShader);
 
+
+		// Despliegue Modelo Humano
+
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Cuerpo.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Brazo_Izquierdo.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Brazo_Derecho.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Pierna_Izquierda.Draw(lightingShader);
+
+		model = glm::mat4(1.0f);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		Pierna_Derecha.Draw(lightingShader);
 
 		// Despliegue Modelo Lampara
 
