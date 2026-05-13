@@ -1,7 +1,6 @@
 // Proyecto final
 // 316118732
-// 421025550
-// Fecha de entrega: 02 de mayo de 2026
+// Fecha de entrega: XX de mayo de 2026
 
 #include <iostream>
 #include <cmath>
@@ -148,7 +147,7 @@ float escala_StandOpcional = 0.01f;
 
 //KeyFrames
 float dogPosX, dogPosY, dogPosZ;
-#define MAX_FRAMES 100
+#define MAX_FRAMES 400
 int i_max_steps = 190;
 int i_curr_steps = 0;
 
@@ -1299,24 +1298,24 @@ void DoMovement()
 
 	if (keys[GLFW_KEY_UP])
 	{
-		carrPosZ += 0.01f;
+		carrPosZ += 0.1f;
 		acelerar += 0.8f;
 	}
 
 	if (keys[GLFW_KEY_DOWN])
 	{
-		carrPosZ -= 0.01f;
+		carrPosZ -= 0.1f;
 		acelerar -= 0.8f;
 	}
 
 	if (keys[GLFW_KEY_LEFT])
 	{
-		carrPosX += 0.01f;
+		carrPosX += 0.1f;
 	}
 
 	if (keys[GLFW_KEY_RIGHT])
 	{
-		carrPosX -= 0.01f;
+		carrPosX -= 0.1f;
 	}
 
 	if (keys[GLFW_KEY_Q])
@@ -1325,7 +1324,7 @@ void DoMovement()
 		{
 			girarLlanta += 0.5f;
 		}
-		girarCarr += 0.09;
+		girarCarr += 0.9;
 		acelerar = 0;
 	}
 
@@ -1335,7 +1334,7 @@ void DoMovement()
 		{
 			girarLlanta -= 0.5f;
 		}
-		girarCarr -= 0.09;
+		girarCarr -= 0.9;
 		acelerar = 0;
 	}
 
