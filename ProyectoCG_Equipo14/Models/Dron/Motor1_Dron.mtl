@@ -1,7 +1,7 @@
 # 3ds Max Wavefront OBJ Exporter v0.99 - (c)2007 guruware
-# File Created: 13.05.2026 23:22:25
+# File Created: 16.05.2026 16:15:05
 
-newmtl Material__81
+newmtl Material__28
 	Ns 10.0000
 	Ni 1.5000
 	d 1.0000
@@ -12,7 +12,7 @@ newmtl Material__81
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka Plastic014A_1K-JPG_Color.jpg
-	map_Kd Plastic014A_1K-JPG_Color.jpg
-	map_bump Plastic014A_1K-JPG_NormalDX.jpg
-	bump Plastic014A_1K-JPG_NormalDX.jpg
+	map_Ka Plastic007_1K-JPG_Color.jpg
+	map_Kd Plastic007_1K-JPG_Color.jpg
+	map_bump Plastic007_1K-JPG_NormalDX.jpg
+	bump Plastic007_1K-JPG_NormalDX.jpg

@@ -1,6 +1,6 @@
 // Proyecto final
 // 316118732
-// Fecha de entrega: 13 de mayo de 2026
+// Fecha de entrega: XX de mayo de 2026
 
 #include <iostream>
 #include <cmath>
@@ -35,6 +35,8 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 void MouseCallback(GLFWwindow *window, double xPos, double yPos);
 void DoMovement();
 void Animation();
+void CaminarHumano();
+void MoverMotor();
 
 // Window dimensions
 const GLuint WIDTH = 800, HEIGHT = 600;
@@ -134,16 +136,45 @@ float girarCarr = 0.0f;
 float traslacionStandCamioneta = -10.0f;
 bool animCamioneta = false;
 
-// Animacion Stands Básicos
+// Anim Stands Básicos
 int anim_Stands = 0;
 float traslacion_StandBasico = -5.0f;
 float rotacion_StandBasico = 0.0f;
 float escala_StandBasico = 0.01f;
 
-// Animación Stands Opcionales
+// Anim Stands Opcionales
 float traslacion_StandOpcional = -10.0f;
 float rotacon_StandOpcional = 0.0f;
 float escala_StandOpcional = 0.01f;
+
+// Anim Humano (Flujo de personas)
+int animFlujo = 0;
+float humPosX = 6.5f;
+float humPosY = 1.921f;
+float humPosZ = 31.0f;
+float rotCuerpo = -90.0f;
+float rotBrazos = 0.0f;
+float rotPiernas = 0.0f;
+float escalaHumano = 0.0f;
+bool step = false;
+
+// Anim Brazo Robotico
+int animBrazo = -1;
+float mesaPosX = 6.5f;
+float mesaPosY = 0.77f;
+float mesaPosZ = 31.0f;
+float rotMesa = 90.0f;
+float rotBase = 0.0f;
+float rotParte1 = 0.0f;
+float rotParte2 = 0.0f;
+float rotParte3 = 0.0f;
+
+// Anim Dron
+int animDron = 0;
+float dronPosX = 0.0f;
+float dronPosY = 0.3f;
+float dronPosZ = 0.0f;
+float rotMotor = 0.0f;
 
 //KeyFrames
 float dogPosX, dogPosY, dogPosZ;
@@ -422,6 +453,19 @@ int main()
 	Model Pierna_Izquierda((char*)"Models/Humano/Pierna_Izquierda.obj");
 	Model Pierna_Derecha((char*)"Models/Humano/Pierna_Derecha.obj");
 
+	// Carga Modelo Brazo Robotico
+	Model Mesa_Brazo((char*)"Models/Brazo_Robotico/Mesa_Brazo.obj");
+	Model Base_Brazo((char*)"Models/Brazo_Robotico/Base_Brazo.obj");
+	Model Parte1_Brazo((char*)"Models/Brazo_Robotico/Parte1_Brazo.obj");
+	Model Parte2_Brazo((char*)"Models/Brazo_Robotico/Parte2_Brazo.obj");
+	Model Parte3_Brazo((char*)"Models/Brazo_Robotico/Parte3_Brazo.obj");
+
+	// Carga Modelo Dron
+	Model Cuerpo_Dron((char*)"Models/Dron/Cuerpo_Dron.obj");
+	Model Motor1_Dron((char*)"Models/Dron/Motor1_Dron.obj");
+	Model Motor2_Dron((char*)"Models/Dron/Motor2_Dron.obj");
+	Model Motor3_Dron((char*)"Models/Dron/Motor3_Dron.obj");
+	Model Motor4_Dron((char*)"Models/Dron/Motor4_Dron.obj");
 
 	//KeyFrames
 	for (int i = 0; i < MAX_FRAMES; i++)
@@ -821,27 +865,121 @@ int main()
 		Columnas_Entorno.Draw(lightingShader);
 
 
+		// Despliegue Modelo Dron
+
+		if (animDron > 0)
+		{
+
+			MoverMotor();
+
+			model = glm::mat4(1.0f);
+			modelTemp = model = glm::translate(model, glm::vec3(dronPosX, dronPosY, dronPosZ));
+			//modelTemp = model = glm::rotate(model, glm::radians(rotMotor), glm::vec3(0.0f, 1.0f, 0.0f));
+			//modelTemp = model = glm::scale(model, glm::vec3(escalaHumano));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Cuerpo_Dron.Draw(lightingShader);
+
+			model = modelTemp;
+			model = glm::translate(model, glm::vec3(-0.21f, 0.02f, 0.21f));
+			model = glm::rotate(model, glm::radians(rotMotor), glm::vec3(0.0f, 1.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Motor1_Dron.Draw(lightingShader);
+
+			model = modelTemp;
+			model = glm::translate(model, glm::vec3(0.21f, 0.025f, 0.21f));
+			model = glm::rotate(model, glm::radians(rotMotor), glm::vec3(0.0f, 1.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Motor2_Dron.Draw(lightingShader);
+
+			model = modelTemp;
+			model = glm::translate(model, glm::vec3(-0.21f, 0.02f, -0.21f));
+			model = glm::rotate(model, glm::radians(rotMotor), glm::vec3(0.0f, 1.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Motor3_Dron.Draw(lightingShader);
+
+			model = modelTemp;
+			model = glm::translate(model, glm::vec3(0.21f, 0.02f, -0.21f));
+			model = glm::rotate(model, glm::radians(rotMotor), glm::vec3(0.0f, 1.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Motor4_Dron.Draw(lightingShader);
+		}
+
+
+		// Despliegue Modelo Brazo Robotico
+
+		if (anim_Stands == 2 and animBrazo > -1)
+		{
+			model = glm::mat4(1.0f);
+			modelTemp = model = glm::translate(model, glm::vec3(mesaPosX, mesaPosY, mesaPosZ));
+			modelTemp = model = glm::rotate(model, glm::radians(rotMesa), glm::vec3(0.0f, 1.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Mesa_Brazo.Draw(lightingShader);
+
+			//model = modelTemp;
+			model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+			model = glm::rotate(model, glm::radians(rotBase), glm::vec3(0.0f, 1.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Base_Brazo.Draw(lightingShader);
+
+			//model = modelTemp;
+			model = glm::translate(model, glm::vec3(0.0f, 0.24f, 0.0f));
+			model = glm::rotate(model, glm::radians(rotParte1), glm::vec3(1.0f, 0.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Parte1_Brazo.Draw(lightingShader);
+
+			//model = modelTemp;
+			model = glm::translate(model, glm::vec3(-0.02f, 0.33f, -0.38f));
+			model = glm::rotate(model, glm::radians(rotParte2), glm::vec3(1.0f, 0.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Parte2_Brazo.Draw(lightingShader);
+
+			//model = modelTemp;
+			model = glm::translate(model, glm::vec3(0.0f, -0.4f, -0.65f));
+			model = glm::rotate(model, glm::radians(rotParte3), glm::vec3(1.0f, 0.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Parte3_Brazo.Draw(lightingShader);
+		}
+
+
 		// Despliegue Modelo Humano
 
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Cuerpo.Draw(lightingShader);
+		if (anim_Stands == 0 and animFlujo != 0)
+		{
 
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Brazo_Izquierdo.Draw(lightingShader);
+			CaminarHumano();
+			
+			model = glm::mat4(1.0f);
+			modelTemp = model = glm::translate(model, glm::vec3(humPosX, humPosY, humPosZ));
+			modelTemp = model = glm::rotate(model, glm::radians(rotCuerpo), glm::vec3(0.0f, 1.0f, 0.0f));
+			modelTemp = model = glm::scale(model, glm::vec3(escalaHumano));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Cuerpo.Draw(lightingShader);
 
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Brazo_Derecho.Draw(lightingShader);
+			model = modelTemp;
+			model = glm::translate(model, glm::vec3(0.24f, 0.14f, 0.02f));
+			model = glm::rotate(model, glm::radians(rotBrazos), glm::vec3(1.0f, 0.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Brazo_Izquierdo.Draw(lightingShader);
 
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Pierna_Izquierda.Draw(lightingShader);
+			model = modelTemp;
+			model = glm::translate(model, glm::vec3(-0.26f, 0.15f, 0.02f));
+			model = glm::rotate(model, glm::radians(rotBrazos), glm::vec3(-1.0f, 0.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Brazo_Derecho.Draw(lightingShader);
 
-		model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Pierna_Derecha.Draw(lightingShader);
+			model = modelTemp;
+			model = glm::translate(model, glm::vec3(0.108f, -0.85f, 0.02f));
+			model = glm::rotate(model, glm::radians(rotPiernas), glm::vec3(-1.0f, 0.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Pierna_Izquierda.Draw(lightingShader);
+
+			model = modelTemp;
+			model = glm::translate(model, glm::vec3(-0.109f, -0.85f, 0.026f));
+			model = glm::rotate(model, glm::radians(rotPiernas), glm::vec3(1.0f, 0.0f, 0.0f));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+			Pierna_Derecha.Draw(lightingShader);
+
+		}
 
 		// Despliegue Modelo Lampara
 
@@ -1413,6 +1551,23 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 		printf("\nPosZ: %f", camera.GetPosition().z);*/
 	}
 
+	if (keys[GLFW_KEY_C])
+	{
+		animFlujo++;
+		//if (animFlujo > 1) animFlujo = 0;
+		//estadosFlujo += 1;
+	}
+
+	if (keys[GLFW_KEY_V])
+	{
+		animBrazo++;
+	}
+
+	if (keys[GLFW_KEY_B])
+	{
+		animDron++;
+	}
+
 	if (keys[GLFW_KEY_L])
 	{
 		if (play == false && (FrameIndex > 1))
@@ -1543,11 +1698,526 @@ void Animation() {
 		escala_StandOpcional = 0.01f;
 	}
 
+	// Máquina de estados animación stand camioneta
 	if (animCamioneta)
 	{
 		if (traslacionStandCamioneta < 0)
 		{
 			traslacionStandCamioneta += 0.1;
+		}
+	}
+
+	//Máquina de estados animación flujo de humanos
+	if (animFlujo == 0)
+	{
+		humPosX = 6.5f;
+		humPosY = 1.921f;
+		humPosZ = 31.0f;
+		rotCuerpo = -90.0f;
+		rotBrazos = 0.0f;
+		rotPiernas = 0.0f;
+		escalaHumano = 0.0f;
+		step = false;
+	}
+
+	if (animFlujo == 1)
+	{
+		escalaHumano += 0.01f;
+		if (escalaHumano > 0.9) animFlujo = 2;
+	}
+
+	if (animFlujo == 2)
+	{
+		humPosX -= 0.01f;
+		if (humPosX < 0.0f) animFlujo = 3;
+	}
+
+	if (animFlujo == 3)
+	{
+		rotCuerpo -= 0.5f;
+		if (rotCuerpo < -180.0f) animFlujo = 4;
+	}
+
+	if (animFlujo == 4)
+	{
+		humPosZ -= 0.01f;
+		if (humPosZ < -32.0f) animFlujo = 5;
+	}
+
+	if (animFlujo == 5)
+	{
+		rotCuerpo -= 0.5f;
+		if (rotCuerpo < -270.0f) animFlujo = 6;
+	}
+
+	if (animFlujo == 6)
+	{
+		humPosX += 0.01f;
+		if (humPosX > 8.0f) animFlujo = 7;
+	}
+
+	if (animFlujo == 7)
+	{
+		escalaHumano -= 0.01f;
+		if (escalaHumano < 0) animFlujo = 8;
+	}
+
+	if (animFlujo == 8)
+	{
+		rotCuerpo = 90.0f;
+		humPosX = -18.0f;
+		humPosZ = -31.0f;
+		escalaHumano += 0.01f;
+		if (escalaHumano > 0.9) animFlujo = 9;
+	}
+
+	if (animFlujo == 9)
+	{
+		humPosX += 0.01;
+		if (humPosX > 0) animFlujo = 10;
+	}
+
+	if (animFlujo == 10)
+	{
+		rotCuerpo -= 0.5f;
+		if (rotCuerpo < 0.0f) animFlujo = 11;
+	}
+
+	if (animFlujo == 11)
+	{
+		humPosZ += 0.01f;
+		if (humPosZ > 38.0f) animFlujo = 12;
+	}
+
+	if (animFlujo == 12)
+	{
+		rotCuerpo += 0.5f;
+		if (rotCuerpo > 90.0f) animFlujo = 13;
+	}
+
+	if (animFlujo == 13)
+	{
+		humPosX += 0.01f;
+		if (humPosX > 6.5f) animFlujo = 14;
+	}
+
+	if (animFlujo == 14)
+	{
+		escalaHumano -= 0.01f;
+		if (escalaHumano < 0) animFlujo = 0;
+	}
+
+	//Máquina de estados animación Brazo Robótico
+	if (animBrazo == 0)
+	{
+		mesaPosX = 6.5f;
+		mesaPosY = 0.77f;
+		mesaPosZ = 31.0f;
+		rotMesa = 90.0f;
+		rotBase = 0.0f;
+		rotParte1 = 0.0f;
+		rotParte2 = 0.0f;
+		rotParte3 = 0.0f;
+	}
+
+	if (animBrazo == 1)
+	{
+		mesaPosX -= 0.01f;
+		if (mesaPosX < 0.0f) animBrazo = 2;
+	}
+
+	if (animBrazo == 2)
+	{
+		rotMesa -= 0.5f;
+		if (rotMesa < 0) animBrazo = 3;
+	}
+
+	if (animBrazo == 3)
+	{
+		mesaPosZ -= 0.01f;
+		if (mesaPosZ < 17.0f) animBrazo = 4;
+	}
+
+	if (animBrazo == 4)
+	{
+		rotBase += 0.5f;
+		if (rotBase > 90) animBrazo = 5;
+	}
+
+	if (animBrazo == 5)
+	{
+		rotParte1 += 0.5f;
+		if (rotParte1 > 20.0f)
+		{
+			rotParte2 += 0.5f;
+			if (rotParte2 > 30.0f)
+			{
+				animBrazo = 6;
+			}
+		}
+	}
+
+	if (animBrazo == 6)
+	{
+		rotParte3 += 0.5f;
+		if (rotParte3 > 70.0f) animBrazo = 7;
+	}
+
+	if (animBrazo == 7)
+	{
+		rotParte3 -= 0.5f;
+		if (rotParte3 < -30.0f) animBrazo = 8;
+	}
+
+	if (animBrazo == 8)
+	{
+		rotParte1 -= 0.5f;
+		if (rotParte1 < 0.0f)
+		{
+			rotParte2 -= 0.5f;
+			if (rotParte2 < 0.0f)
+			{
+				animBrazo = 9;
+			}
+		}
+	}
+
+	if (animBrazo == 9)
+	{
+		rotBase -= 0.5f;
+		if (rotBase < 0.0f) animBrazo = 10;
+	}
+
+	if (animBrazo == 10)
+	{
+		mesaPosZ -= 0.01f;
+		if (mesaPosZ < 3.0f) animBrazo = 11;
+	}
+
+	if (animBrazo == 11)
+	{
+		rotBase -= 0.5f;
+		if (rotBase < -90.0f) animBrazo = 12;
+	}
+
+	if (animBrazo == 12)
+	{
+		rotParte1 += 0.5f;
+		if (rotParte1 > 20.0f)
+		{
+			rotParte2 += 0.5f;
+			if (rotParte2 > 30.0f)
+			{
+				animBrazo = 13;
+			}
+		}
+	}
+
+	if (animBrazo == 13)
+	{
+		rotParte3 += 0.5f;
+		if (rotParte3 > 70.0f) animBrazo = 14;
+	}
+
+	if (animBrazo == 14)
+	{
+		rotParte3 -= 0.5f;
+		if (rotParte3 < -30.0f) animBrazo = 15;
+	}
+
+	if (animBrazo == 15)
+	{
+		rotParte1 -= 0.5f;
+		if (rotParte1 < 0.0f)
+		{
+			rotParte2 -= 0.5f;
+			if (rotParte2 < 0.0f)
+			{
+				animBrazo = 16;
+			}
+		}
+	}
+
+	if (animBrazo == 16)
+	{
+		rotBase += 0.5f;
+		if (rotBase > 0.0f) animBrazo = 17;
+	}
+
+	if (animBrazo == 17)
+	{
+		mesaPosZ -= 0.01f;
+		if (mesaPosZ < -11.0f) animBrazo = 18;
+	}
+
+	if (animBrazo == 18)
+	{
+		rotBase += 0.5f;
+		if (rotBase > 90.0f) animBrazo = 19;
+	}
+
+	if (animBrazo == 19)
+	{
+		rotParte1 += 0.5f;
+		if (rotParte1 > 20.0f)
+		{
+			rotParte2 += 0.5f;
+			if (rotParte2 > 30.0f)
+			{
+				animBrazo = 20;
+			}
+		}
+	}
+
+	if (animBrazo == 20)
+	{
+		rotParte3 += 0.5f;
+		if (rotParte3 > 70.0f) animBrazo = 21;
+	}
+
+	if (animBrazo == 21)
+	{
+		rotParte3 -= 0.5f;
+		if (rotParte3 < -30.0f) animBrazo = 22;
+	}
+
+	if (animBrazo == 22)
+	{
+		rotParte1 -= 0.5f;
+		if (rotParte1 < 0.0f)
+		{
+			rotParte2 -= 0.5f;
+			if (rotParte2 < 0.0f)
+			{
+				animBrazo = 23;
+			}
+		}
+	}
+
+	if (animBrazo == 23)
+	{
+		rotBase -= 0.5f;
+		if (rotBase < 0.0f) animBrazo = 24;
+	}
+
+	if (animBrazo == 24)
+	{
+		mesaPosZ -= 0.01f;
+		if (mesaPosZ < -23.0f) animBrazo = 25;
+	}
+
+	if (animBrazo == 25)
+	{
+		rotBase -= 0.5f;
+		if (rotBase < -90.0f) animBrazo = 26;
+	}
+
+	if (animBrazo == 26)
+	{
+		rotParte1 += 0.5f;
+		if (rotParte1 > 20.0f)
+		{
+			rotParte2 += 0.5f;
+			if (rotParte2 > 30.0f)
+			{
+				animBrazo = 27;
+			}
+		}
+	}
+
+	if (animBrazo == 27)
+	{
+		rotParte3 += 0.5f;
+		if (rotParte3 > 70.0f) animBrazo = 28;
+	}
+
+	if (animBrazo == 28)
+	{
+		rotParte3 -= 0.5f;
+		if (rotParte3 < -30.0f) animBrazo = 29;
+	}
+
+	if (animBrazo == 29)
+	{
+		rotParte1 -= 0.5f;
+		if (rotParte1 < 0.0f)
+		{
+			rotParte2 -= 0.5f;
+			if (rotParte2 < 0.0f)
+			{
+				animBrazo = 30;
+			}
+		}
+	}
+
+	if (animBrazo == 30)
+	{
+		rotBase += 0.5f;
+		if (rotBase > 0.0f) animBrazo = 31;
+	}
+
+	if (animBrazo == 31)
+	{
+		mesaPosZ -= 0.01f;
+		if (mesaPosZ < -31.0f) animBrazo = 32;
+	}
+
+	if (animBrazo == 32)
+	{
+		rotBase -= 0.5f;
+		if (rotBase < -180.0f) animBrazo = 33;
+	}
+
+	if (animBrazo == 33)
+	{
+		rotParte1 += 0.5f;
+		if (rotParte1 > 20.0f)
+		{
+			rotParte2 += 0.5f;
+			if (rotParte2 > 30.0f)
+			{
+				animBrazo = 34;
+			}
+		}
+	}
+
+	if (animBrazo == 34)
+	{
+		rotParte3 += 0.5f;
+		if (rotParte3 > 70.0f) animBrazo = 35;
+	}
+
+	if (animBrazo == 35)
+	{
+		rotParte3 -= 0.5f;
+		if (rotParte3 < -30.0f) animBrazo = 36;
+	}
+
+	if (animBrazo == 36)
+	{
+		rotParte1 -= 0.5f;
+		if (rotParte1 < 0.0f)
+		{
+			rotParte2 -= 0.5f;
+			if (rotParte2 < 0.0f)
+			{
+				animBrazo = -1;
+			}
+		}
+	}
+
+	//Máquina de estados animación Dron
+	/*if (animDron == 1)
+	{
+		float dronPosX = 0.0f;
+		float dronPosY = 0.3f;
+		float dronPosZ = 0.0f;
+		float rotMotor = 0.0f;
+	}
+
+	if (animDron == 2)
+	{
+		dronPosY += 0.01;
+		if (dronPosY > 3.0f) animDron = 3;
+	}
+
+	if (animDron == 3)
+	{
+
+	}*/
+
+	// ========================================================
+	// Máquina de estados animación Dron (Recorrido de Escenario)
+	// ========================================================
+
+	// Estado 1: Despegue vertical
+	if (animDron == 1)
+	{
+		dronPosY += 0.02f; // Asciende gradualmente
+		if (dronPosY >= 4.5f)
+		{
+			animDron = 2;
+		}
+	}
+
+	// Estado 2: Desplazamiento al frente izquierdo (X = -18.0, Z = 35.0)
+	if (animDron == 2)
+	{
+		if (dronPosX > -18.0f) dronPosX -= 0.1f;
+		if (dronPosZ < 35.0f)  dronPosZ += 0.1f;
+
+		// Cuando alcance la esquina aproximada, cambia de estado
+		if (dronPosX <= -18.0f && dronPosZ >= 35.0f)
+		{
+			animDron = 3;
+		}
+	}
+
+	// Estado 3: Recorrido lateral izquierdo hacia el fondo (Z baja a -38.0)
+	if (animDron == 3)
+	{
+		dronPosZ -= 0.15f; // Avanza rápido por el lateral
+		if (dronPosZ <= -30.0f)
+		{
+			animDron = 4;
+		}
+	}
+
+	// Estado 4: Cruce transversal por el fondo (X va de -18.0 a 9.0)
+	if (animDron == 4)
+	{
+		dronPosX += 0.15f;
+		if (dronPosX >= 9.0f)
+		{
+			animDron = 5;
+		}
+	}
+
+	// Estado 5: Recorrido lateral derecho hacia el frente (Z sube a 35.0)
+	if (animDron == 5)
+	{
+		dronPosZ += 0.15f;
+		if (dronPosZ >= 25.0f)
+		{
+			animDron = 6;
+		}
+	}
+
+	// Estado 6: Vuelo diagonal cruzando el escenario (X de 9.0 a -18.0, Z de 35.0 a -38.0)
+	if (animDron == 6)
+	{
+		dronPosX -= 0.1f;
+		dronPosZ -= 0.27f; // Proporcional para cubrir la distancia en Z que es mayor
+
+		if (dronPosX <= -18.0f or dronPosZ <= -30.0f)
+		{
+			animDron = 7;
+		}
+	}
+
+	// Estado 7: Regreso al punto de origen en X y Z (X = 0.0, Z = 0.0)
+	if (animDron == 7)
+	{
+		if (dronPosX < 0.0f) dronPosX += 0.1f;
+		if (dronPosZ < 0.0f) dronPosZ += 0.2f;
+
+		if (dronPosX >= 0.0f && dronPosZ >= 0.0f)
+		{
+			// Aseguramos precisión en el origen antes de descender
+			dronPosX = 0.0f;
+			dronPosZ = 0.0f;
+			animDron = 8;
+		}
+	}
+
+	// Estado 8: Aterrizaje suave y reinicio
+	if (animDron == 8)
+	{
+		dronPosY -= 0.02f; // Desciende gradualmente
+		if (dronPosY <= 0.3f)
+		{
+			dronPosY = 0.3f; // Fijamos posición inicial en el piso
+			animDron = 0;    // Bucle infinito: vuelve a despegar
 		}
 	}
 }
@@ -1568,4 +2238,28 @@ void MouseCallback(GLFWwindow *window, double xPos, double yPos)
 	lastY = yPos;
 
 	camera.ProcessMouseMovement(xOffset, yOffset);
+}
+
+void CaminarHumano()
+{
+	if (!step)			// State 1
+	{
+		rotBrazos += 0.5f;
+		rotPiernas += 0.5f;
+
+		if (rotBrazos > 15.0f) step = true;		// Condition 1
+	}
+	else				// State 2
+	{
+		rotBrazos -= 0.5f;
+		rotPiernas -= 0.5f;
+
+		if (rotBrazos < -15.0f) step = false;	// Condition 2
+	}
+}
+
+void MoverMotor()
+{
+	rotMotor += 2.0f;
+	if (rotMotor > 10000.0f) rotMotor = 0;
 }
