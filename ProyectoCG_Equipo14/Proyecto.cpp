@@ -121,7 +121,7 @@ float rotMotor = 0.0f;
 //KeyFrames
 float dogPosX, dogPosY, dogPosZ;
 #define MAX_FRAMES 400
-int i_max_steps = 190;
+int i_max_steps = 40;
 int i_curr_steps = 0;
 
 typedef struct _frame {
